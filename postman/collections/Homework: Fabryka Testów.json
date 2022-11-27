@@ -1,0 +1,527 @@
+{
+	"info": {
+		"_postman_id": "94b0f57d-b924-4ecb-923b-c4c8818ba871",
+		"name": "Homework: Fabryka Testów",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "7500694-94b0f57d-b924-4ecb-923b-c4c8818ba871"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Read all posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6fcb271-0bc3-4008-b0ee-c6e94ec78a4e",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.expect(json[0].userId).is.to.equal(1);\r",
+									"    pm.expect(json[0].id).is.to.equal(1);\r",
+									"    pm.expect(json[0].title).is.to.equal(\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\");\r",
+									"    pm.expect(json[0].body).is.to.equal(\"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\");\r",
+									"\r",
+									"    pm.expect(json[99].userId).is.to.equal(10);\r",
+									"    pm.expect(json[99].id).is.to.equal(100);\r",
+									"    pm.expect(json[99].title).is.to.equal(\"at nam consequatur ea labore ea harum\");\r",
+									"    pm.expect(json[99].body).is.to.equal(\"cupiditate quo est a modi nesciunt soluta\\nipsa voluptas error itaque dicta in\\nautem qui minus magnam et distinctio eum\\naccusamus ratione error aut\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has 100 users\", function () {\r",
+									"    pm.expect(json.length).to.equal(100)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 150ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(150);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "75316819-fbee-4783-9db4-cb08c0328115",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/posts",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d3cb1c92-483a-4bc2-a088-c54eb7da7382",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function(){\r",
+									"    pm.expect(json.userId).to.eql(101)\r",
+									"    pm.expect(json.id).to.eql(101)\r",
+									"    pm.expect(json.title).to.eql(\"user nr101\")\r",
+									"    pm.expect(json.body).to.eql(\"test dla utworzenia usera nr101\")\r",
+									"    \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 6390ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(6390);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d156c110-404b-4b53-93ca-050f677a026a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"userId\": 101,\r\n        \"id\": 101,\r\n        \"title\": \"user nr101\",\r\n        \"body\": \"test dla utworzenia usera nr101\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/posts",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b2b60ba6-1fb6-420a-99f8-6d6c8ce98915",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5bd19f78-e038-425e-8d5b-9fbd0333f31c",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function(){\r",
+									"    pm.expect(json.userId).to.eql(1)\r",
+									"    pm.expect(json.id).to.eql(1)\r",
+									"    pm.expect(json.title).to.eql(\"Test- zmiana tytułu\")\r",
+									"    pm.expect(json.body).to.eql(\"Test- zmiana body\")\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 322ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(323);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cf65376e-490e-4b58-8b26-0cf66e9da4c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"userId\": 1,\r\n        \"id\": 1,\r\n        \"title\": \"Test- zmiana tytułu\",\r\n        \"body\": \"Test- zmiana body\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/posts/1",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "931ba3fe-ac10-4297-b588-8b9f2c965308",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"{}\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 322ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(341);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a798a7ab-047e-4d7a-97b3-a1bd4e59a17a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/posts/1",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "7e97b9c3-5e23-4cb8-ac1e-a21565dc575b"
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Read all comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "06a661f5-c06a-41d1-a75d-82088b6e0430",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.expect(json[0].postId).is.to.equal(1);\r",
+									"    pm.expect(json[0].id).is.to.equal(1);\r",
+									"    pm.expect(json[0].name).is.to.equal(\"id labore ex et quam laborum\");\r",
+									"    pm.expect(json[0].email).is.to.equal(\"Eliseo@gardner.biz\");\r",
+									"    pm.expect(json[0].body).is.to.equal(\"laudantium enim quasi est quidem magnam voluptate ipsam eos\\ntempora quo necessitatibus\\ndolor quam autem quasi\\nreiciendis et nam sapiente accusantium\");\r",
+									"\r",
+									"    pm.expect(json[499].postId).is.to.equal(100);\r",
+									"    pm.expect(json[499].id).is.to.equal(500);\r",
+									"    pm.expect(json[499].name).is.to.equal(\"ex eaque eum natus\");\r",
+									"    pm.expect(json[499].email).is.to.equal(\"Emma@joanny.ca\");\r",
+									"    pm.expect(json[499].body).is.to.equal(\"perspiciatis quis doloremque\\nveniam nisi eos velit sed\\nid totam inventore voluptatem laborum et eveniet\\naut aut aut maxime quia temporibus ut omnis\")\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has 100 users\", function () {\r",
+									"    pm.expect(json.length).to.equal(500)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 150ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(341);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "fcd11be6-61f7-44d4-a9a5-cf25fefd4784",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/comments",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27dfff01-0573-4636-8bbb-05e3ca7764ee",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function(){\r",
+									"    pm.expect(json.postId).to.eql(101)\r",
+									"    pm.expect(json.id).to.eql(501)\r",
+									"    pm.expect(json.name).to.eql(\"user nr501\")\r",
+									"    pm.expect(json.email).to.eql(\"user501@gmail.com\")\r",
+									"    pm.expect(json.body).to.eql(\"test dla utworzenia usera nr501\")\r",
+									"    \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 6390ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(341);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b400685d-efac-4767-8dcc-c3c59a5c818b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"postId\": 101,\r\n        \"id\": 501,\r\n        \"name\": \"user nr501\",\r\n        \"email\": \"user501@gmail.com\",\r\n        \"body\": \"test dla utworzenia usera nr501\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/comments",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01ae7ccf-ed6a-4c75-a4c6-b2317910d8c7",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function(){\r",
+									"    pm.expect(json.postId).to.eql(1)\r",
+									"    pm.expect(json.id).to.eql(1) \r",
+									"    pm.expect(json.name).to.eql(\"test- zmiana name\")\r",
+									"    pm.expect(json.email).to.eql(\"test@gmail.com\")\r",
+									"    pm.expect(json.body).to.eql(\"test- zmiana body\")\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 322ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(507);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f5a3854a-0210-47e0-8141-9d9dd807d57b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"postId\": 1,\r\n        \"id\": 1,\r\n        \"name\": \"test- zmiana name\",\r\n        \"email\": \"test@gmail.com\",\r\n        \"body\": \"test- zmiana body\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/comments/1",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01ae7ccf-ed6a-4c75-a4c6-b2317910d8c7",
+								"exec": [
+									"const json = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"{}\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 322ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(341);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "2d72bb6a-0c7f-4ce1-a170-d57fd85b8399",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://jsonplaceholder.typicode.com/comments/1",
+							"protocol": "https",
+							"host": [
+								"jsonplaceholder",
+								"typicode",
+								"com"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "a16722b1-b2a2-4f18-aca4-7f372795fa98"
+		}
+	]
+}
